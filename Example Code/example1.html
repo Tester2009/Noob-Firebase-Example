@@ -1,0 +1,52 @@
+<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
+  };
+  firebase.initializeApp(config);
+
+  var db = firebase.database();
+
+  var pull_Data = db.ref('data_A/data_B')
+
+  pull_Data.on('child_changed', function(snapshot) {
+    // console.log(snapshot.ref.path.pieces_)
+    // console.log(snapshot.ref.ref.parent.path )
+    // console.log( snapshot.ref )
+    // console.log(snapshot.val())
+    // console.log( snapshot.parent ) // get key
+    // full_topic_path = ""
+    // console.log( snapshot.ref.path.pieces_.length )
+    // for(i=0; i<snapshot.ref.path.pieces_.length; i++) {
+    //   // console.log(snapshot.ref.path.pieces_[i])
+    //   full_topic_path+= snapshot.ref.path.pieces_[i]+"/"
+    // }
+    // console.log(full_topic_path) // get the topic now.
+    // console.log( snapshot.ref.path.pieces_[2] ) // topic is here now bois
+
+    get_topic = snapshot.ref.path.pieces_[2] // for full topic, can get through: snapshot.ref.path.pieces_ (it is an array)
+    // get_key_inside_topic_minus_one_because_need_latest_one =
+    get_all_keys = Object.keys(snapshot.val()) // it is stored in array
+    get_all_values = Object.values(snapshot.val())
+    filtered_need_one_key_only_latest_one = get_all_keys.length - 1 // get length of get_all_keys. then minus 1 to get the last position of data in array
+    get_timestamp = get_all_values[filtered_need_one_key_only_latest_one].timestamp
+    get_value = get_all_values[filtered_need_one_key_only_latest_one].value
+
+    console.log("Topic: "+get_topic+"\nKey: "+filtered_need_one_key_only_latest_one+"\nTimestamp: "+get_timestamp+"\nValue: "+get_value)
+
+    // console.log( snapshot.ref.path.pieces_[2] )
+    // console.log( Object.keys(snapshot.val())[ Object.keys(snapshot.val()).length-1 ] )
+    // console.log( Object.values(snapshot.val())[ Object.keys(snapshot.val()).length-1 ].timestamp )
+    // console.log( Object.values(snapshot.val())[ Object.keys(snapshot.val()).length-1 ].value )
+
+
+  })
+
+
+</script>
