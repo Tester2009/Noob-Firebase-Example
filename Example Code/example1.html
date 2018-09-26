@@ -13,7 +13,7 @@
 
   var db = firebase.database();
 
-  var pull_Data = db.ref('data_A/data_B')
+  var pull_Data = db.ref('sensors/data')
 
   pull_Data.on('child_changed', function(snapshot) {
     // console.log(snapshot.ref.path.pieces_)
